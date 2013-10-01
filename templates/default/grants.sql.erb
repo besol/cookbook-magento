@@ -1,0 +1,11 @@
+-- DELETE FROM mysql.user WHERE User='';
+-- DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
+-- DROP DATABASE test;
+-- DELETE FROM mysql.db WHERE Db='test' OR Db='test\\_%';
+
+
+GRANT ALL PRIVILEGES ON <%= @database[:database] %>.* TO '<%= @database[:username] %>'@'localhost' IDENTIFIED BY '<%= @database[:password] %>';
+<% if node[:mysql][:allow_remote_root] %>
+GRANT ALL ON <%= @database[:database] %>.* TO '<%= @database[:username] %>'@'%' IDENTIFIED BY '<%= @database[:password] %>' WITH GRANT OPTION;
+<% end %>
+FLUSH PRIVILEGES;
